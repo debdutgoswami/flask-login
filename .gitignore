@@ -1,0 +1,4 @@
+*.vscode/
+
+admin.db
+*__pycache__/
