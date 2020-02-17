@@ -1,6 +1,6 @@
 # Flask Login
 
-A boilerplate code for the login page using Flask.
+A boilerplate code for login and signup page using Flask.
 
 ---
 

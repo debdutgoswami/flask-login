@@ -12,24 +12,9 @@
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
         <title>Flask App</title>
-    
-        <!-- flashed message Flask -->
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <meta id="my-data" data-name="{{ message }}">
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
         
         <!-- jQuery -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script>
-            var flaskData = $('#my-data').data();
-            if(flaskData){
-                window.alert(flaskData['name']);
-            }
-        </script>
 
         <link rel = "icon" href ="../images/logo.png" type="image/x-icon"> 
 
@@ -40,14 +25,36 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                {% block navbar %}
-                {% endblock %}
+                <!-- to maintain tab highlighting after authentication check -->
+                {% block home %}{% endblock %}
+                {% if current_user.is_authenticated %}
+                    <!-- shows only when user is authenticated -->
+                    {% block account %}{% endblock %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">Logout</a>
+                    </li>
+                {% else %}
+                    {% block navbar %}
+                    {% endblock %}
+                {% endif %}
             </ul>
             </div>
         </nav>
         <h1 class="display-3" style="text-align: center;">{% block heading %}{% endblock %}</h1>
     </head>
     <body>
+        <!-- flashed message Flask -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         {% block body %}{% endblock %}
         <small class="form-text text-muted" style="text-align: center;">Made with &hearts; by Debdut Goswami</p>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
