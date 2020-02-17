@@ -24,13 +24,12 @@ def login():
     if current_user.is_authenticated:
         return redirect('/home')
     form = LoginForm()
-    # for redirecting it to the original route from where the request came from
-    next_page = request.args.get('next')
     if form.validate_on_submit():
         user = Admin.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            print(next_page, request.args)
+            # for redirecting it to the original route from where the request came from
+            next_page = request.args.get('next')
             if next_page:
                 return redirect(next_page)
             else:
