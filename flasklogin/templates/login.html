@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block navbar %}
+<li class="nav-item">
+<a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item active">
+<a class="nav-link" href="">Login<span class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="signup">Sign up</a>
+</li>
+{% endblock %}
+
+{% block heading %}Login{% endblock %}
+
+{% block body %}
+<!-- Form -->
+<div class="content-section">
+  <form method="POST" action="/login" style="padding: 2%;">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <div class="form-group">
+        <label for="email" class="form-control-label">Email</label>
+          {% if form.email.errors %}
+            {{ form.email(class_="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.email(class_="form-control form-control-lg") }}
+            <small id="email" class="form-text text-muted">We'll never share your email with anyone</small>
+          {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="psd" class="form-control-label">Password</label>
+        {% if form.password.errors %}
+          {{ form.password(class_="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.password(class_="form-control form-control-lg") }}
+          <small id="psd" class="form-text text-muted">Min of 8 characters</small>
+        {% endif %}
+      </div>
+
+      <div class="form-check">
+        {{ form.remember(class_="form-check-input") }}
+        <label for="remember" class="form-check-label">Remember Me</label>
+      </div>
+
+    </fieldset>
+    <!-- Submit Button -->
+    <div class="form-group">
+      {{ form.submit(class_="btn btn-outline-info") }}
+    </div>
+    <small class="text-muted">
+      <a href="#">Forgot Password?</a>
+    </small>
+  </form>
+</div>
+<div class="border-top pt-3">
+    <small class="text-muted">
+      Need An Account? <a class="ml-2" href="{{ url_for('signup') }}">Sign Up Now</a>
+    </small>
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block navbar %}
+<li class="nav-item">
+<a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="login">Login</a>
+</li>
+<li class="nav-item active">
+<a class="nav-link" href="">Sign up<span class="sr-only">(current)</span></a>
+</li>
+{% endblock %}
+
+{% block heading %}Sign up{% endblock %}
+
+
+{% block body %}
+<!-- Form -->
+<div class="content-section">
+    <form method="POST" action="/signup" style="padding: 2%;">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="form-group">
+                <label for="name" class="form-control-label">Name</label>
+                {% if form.name.errors %}
+                    {{ form.name(class_="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.name(class_="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+            <label for="email" class="form-control-label">Email</label>
+                {% if form.email.errors %}
+                    {{ form.email(class_="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class_="form-control form-control-lg") }}
+                    <small id="email" class="form-text text-muted">We'll never share your email with anyone</small>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="psd" class="form-control-label">Password</label>
+                    {% if form.password.errors %}
+                        {{ form.password(class_="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class_="form-control form-control-lg") }}
+                        <small id="psd" class="form-text text-muted">Min of 8 characters</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="cnfpsd" class="form-control-label">Confirm Password</label>
+                    {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class_="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.confirm_password(class_="form-control form-control-lg") }}
+                    {% endif %}    
+                </div>
+            </div>
+        </fieldset>
+        <!-- Submit Button -->
+        <div class="form-group">
+            {{ form.submit(class_="btn btn-outline-info") }}
+        </div>
+        
+    </form>
+</div>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+    </small>
+</div>
+{% endblock %}
